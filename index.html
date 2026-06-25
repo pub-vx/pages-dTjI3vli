@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ko" class="theme-light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>국내투어 2026년 상반기 리뷰</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>Chart.defaults.animation = false;</script>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { interpolate-size: allow-keywords; }
+    html.theme-dark {
+      --bg: #0A0F0A; --surface: #141A14; --surface-hover: #1C241C;
+      --border: rgba(255,255,255,0.06);
+      --text: #EDEDED; --text-secondary: #94a3b8;
+      --accent: #6BA368; --accent-secondary: #D4A24C;
+      --positive: #10b981; --negative: #f43f5e; --warning: #f59e0b;
+      --hero-grad: linear-gradient(135deg, #1A3A1B 0%, #2C5F2D 50%, #3D7A3F 100%);
+    }
+    html.theme-light {
+      --bg: #FAFAF7; --surface: #FFFFFF; --surface-hover: #F4F4EE;
+      --border: rgba(0,0,0,0.08);
+      --text: #1A1F1A; --text-secondary: #5C6B5C;
+      --accent: #2C5F2D; --accent-secondary: #B8851D;
+      --positive: #059669; --negative: #e11d48; --warning: #d97706;
+      --hero-grad: linear-gradient(135deg, #E8F0E5 0%, #C5DCAF 50%, #97BC62 100%);
+    }
+    body { font-family: 'Noto Sans KR', 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; letter-spacing: -0.01em; transition: background 0.3s, color 0.3s; scrollbar-gutter: stable; overflow-x: hidden; }
+    @media (max-width: 375px) { body { overflow-x: hidden; } }
+    h1, h2, h3, h4 { color: var(--text); letter-spacing: -0.03em; line-height: 1.15; text-wrap: balance; font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+    h1 { font-weight: 800; font-size: clamp(2.5rem, 5vw, 3.5rem); }
+    h2 { font-weight: 700; font-size: clamp(2rem, 4vw, 2.5rem); }
+    h3 { font-weight: 600; font-size: 1.5rem; }
+    p, li, td, th { font-weight: 400; font-size: 1rem; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 32px; }
+    @media (max-width: 768px) { .container { padding: 0 20px; } }
+    section { padding: 64px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    .hero { background: var(--hero-grad); padding: 96px 0 80px; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; top: -200px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%); opacity: 0.15; pointer-events: none; }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-label { display: inline-block; padding: 6px 14px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.06em; backdrop-filter: blur(8px); }
+    html.theme-dark .hero-label { color: var(--accent-secondary); }
+    .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 16px; }
+    .hero .subtitle { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-secondary); margin-bottom: 32px; max-width: 720px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 32px; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.15); max-width: 720px; }
+    html.theme-dark .hero-meta { border-top-color: rgba(255,255,255,0.15); }
+    .hero-meta-item .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 4px; }
+    .hero-meta-item .value { font-size: 15px; font-weight: 600; color: var(--text); }
+    .section-label { display: inline-block; padding: 4px 12px; background: var(--accent); color: white; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .section-header { margin-bottom: 48px; }
+    .section-header h2 { margin-bottom: 12px; }
+    .section-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 800px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; position: relative; overflow: hidden; transition: box-shadow 0.2s; }
+    .kpi-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--card-accent, var(--accent)); }
+    .kpi-card.primary { --card-accent: var(--accent); }
+    .kpi-card.secondary { --card-accent: var(--accent-secondary); }
+    .kpi-card.positive { --card-accent: var(--positive); }
+    .kpi-label { font-size: 12px; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .kpi-value { font-family: 'Inter', sans-serif; font-size: clamp(2.2rem, 4vw, 2.8rem); font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 8px; letter-spacing: -0.03em; }
+    .kpi-value.accent { color: var(--accent); }
+    .kpi-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+    .kpi-delta { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; margin-top: 12px; }
+    .kpi-delta.up { background: rgba(16,185,129,0.12); color: var(--positive); }
+    .kpi-delta.down { background: rgba(244,63,94,0.12); color: var(--negative); }
+    .chart-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; height: 420px; position: relative; }
+    .chart-container.tall { height: 460px; }
+    .chart-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+    .chart-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
+    .chart-canvas-wrap { position: relative; height: calc(100% - 60px); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 24px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 14px 16px; text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    thead th { background: var(--accent); color: white; font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: var(--surface-hover); }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .badge-region-강원 { background: rgba(43,95,45,0.15); color: var(--accent); }
+    .badge-region-전라 { background: rgba(184,133,29,0.15); color: var(--accent-secondary); }
+    .badge-region-경상 { background: rgba(16,185,129,0.12); color: var(--positive); }
+    .badge-region-충청 { background: rgba(245,158,11,0.15); color: var(--warning); }
+    .badge-region-서울경기 { background: rgba(244,63,94,0.12); color: var(--negative); }
+    .badge-region-제주 { background: rgba(59,130,246,0.12); color: #3b82f6; }
+    .insight-card { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent-secondary); border-radius: 12px; padding: 24px 28px; margin-top: 24px; }
+    .insight-card h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--accent); }
+    .insight-card ul { list-style: none; padding: 0; }
+    .insight-card li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; line-height: 1.7; }
+    .insight-card li::before { content: '▸'; position: absolute; left: 8px; color: var(--accent-secondary); font-weight: 700; }
+    .yoy-up { color: var(--positive); font-weight: 700; }
+    .yoy-down { color: var(--negative); font-weight: 700; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    .animate { animation: fadeInUp 0.6s ease-out both; }
+    .animate.delay-1 { animation-delay: 0.1s; }
+    .animate.delay-2 { animation-delay: 0.2s; }
+    .animate.delay-3 { animation-delay: 0.3s; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+    @media print { body { background: white !important; color: black !important; } .viz-menu { display: none !important; } .reveal { opacity: 1 !important; transform: none !important; } .kpi-card, .chart-container, .table-wrap, .insight-card { break-inside: avoid; } section { padding: 24px 0; } * { print-color-adjust: exact; -webkit-print-color-adjust: exact; } }
+    @page { margin: 0.5in; }
+    .viz-menu { position: fixed; top: 16px; right: 16px; z-index: 9999; }
+    .viz-menu-toggle { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(12px); transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .viz-menu-toggle:hover { background: var(--surface-hover); }
+    .viz-menu-dropdown { position: absolute; top: 52px; right: 0; min-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.2s; backdrop-filter: blur(16px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .viz-menu-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .viz-menu-dropdown button { width: 100%; padding: 10px 14px; border: none; border-radius: 8px; background: transparent; color: var(--text); font-size: 14px; font-family: inherit; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; transition: background 0.15s; }
+    .viz-menu-dropdown button:hover { background: var(--surface-hover); }
+    .skip-to-content { position: absolute; top: -40px; left: 6px; background: var(--accent); color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; opacity: 0; pointer-events: none; transition: all 0.2s; z-index: 10000; }
+    .skip-to-content:focus { top: 6px; opacity: 1; pointer-events: auto; }
+    .footnote { font-size: 12px; color: var(--text-secondary); font-style: italic; margin-top: 16px; }
+    .region-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .region-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
+    .region-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--region-color, var(--accent)); }
+    .region-name { font-size: 13px; color: var(--text-secondary); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .region-value { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .region-share { font-size: 12px; color: var(--text-secondary); }
+    .product-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; background: var(--surface-hover); color: var(--text-secondary); border: 1px solid var(--border); }
+    @media (max-width: 768px) { .hero { padding: 64px 0 48px; } section { padding: 48px 0; } .chart-container { padding: 20px; height: 360px; } table { font-size: 12px; } th, td { padding: 10px 8px; } }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-to-content">Skip to content</a>
+  <div class="viz-menu">
+    <button class="viz-menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="15" x2="17" y2="15"/>
+      </svg>
+    </button>
+    <div class="viz-menu-dropdown" id="vizMenuDropdown">
+      <button onclick="cycleTheme()"><span id="themeIcon">☀️</span><span id="themeLabel">Light</span></button>
+      <button onclick="downloadImage()"><span>📥</span><span>Download PNG</span></button>
+      <button onclick="window.print()"><span>🖨️</span><span>Print / PDF</span></button>
+    </div>
+  </div>
+
+  <main id="main" role="main">
+    <section class="hero" role="banner">
+      <div class="container hero-content">
+        <span class="hero-label animate">2026 H1 Performance Review</span>
+        <h1 class="animate delay-1">국내투어 2026년 상반기 리뷰</h1>
+        <p class="subtitle animate delay-2">2025년 상반기 대비 매출 +83.0%, 확정 건수 +38.6%, 체결률 +9.5%p 개선 — 26년 목표 139% 초과 달성</p>
+        <div class="hero-meta animate delay-3">
+          <div class="hero-meta-item"><div class="label">분석 기간</div><div class="value">2025·2026 상반기 (1~6월)</div></div>
+          <div class="hero-meta-item"><div class="label">데이터 출처</div><div class="value">golf_tour DB (실시간)</div></div>
+          <div class="hero-meta-item"><div class="label">분석 단위</div><div class="value">매출·건수·객단가·지역·고객</div></div>
+          <div class="hero-meta-item"><div class="label">작성일</div><div class="value">2026.06.23</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Overall Performance & YoY -->
+    <section data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Part 1 · Overall Performance</span>
+          <h2>전반적 실적 요약 & YoY 비교</h2>
+          <p>골프플랫폼투어팀 공식 실적 시트 기준 2025년 상반기와 2026년 상반기의 수익매출·확정 건수·건당평균을 비교합니다.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card primary">
+            <div class="kpi-label">2026 H1 수익매출</div>
+            <div class="kpi-value accent">4.38억</div>
+            <div class="kpi-sub">2025 H1: 2.39억 · 목표 대비 139.3%</div>
+            <div class="kpi-delta up">▲ YoY +83.0% (+1.99억)</div>
+          </div>
+          <div class="kpi-card secondary">
+            <div class="kpi-label">2026 H1 확정 건수</div>
+            <div class="kpi-value">4,545건</div>
+            <div class="kpi-sub">2025 H1: 3,279건</div>
+            <div class="kpi-delta up">▲ YoY +38.6% (+1,266건)</div>
+          </div>
+          <div class="kpi-card positive">
+            <div class="kpi-label">2026 H1 건당 평균 매출</div>
+            <div class="kpi-value">96,434원</div>
+            <div class="kpi-sub">2025 H1: 73,032원 (수익매출/건수)</div>
+            <div class="kpi-delta up">▲ YoY +32.0% (+23,402원)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">2026 H1 체결률</div>
+            <div class="kpi-value">29.4%</div>
+            <div class="kpi-sub">2025 H1: 19.9% (3~6월 가용 평균)</div>
+            <div class="kpi-delta up">▲ +9.5%p 개선 (전환율 ↑)</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-title">월별 확정 건수 — 2025 vs 2026</div>
+            <div class="chart-subtitle">상반기 동월 비교 (공식 실적 시트 기준)</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="2025년과 2026년 1~6월 월별 확정 건수 비교 막대 차트">
+              <canvas id="monthlyConfirmedChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-title">월별 수익매출 — 2025 vs 2026 (백만원)</div>
+            <div class="chart-subtitle">상반기 동월 매출 비교 (수익매출 기준)</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="2025년과 2026년 월별 매출 비교 차트">
+              <canvas id="monthlyRevenueChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>월</th><th>2025 확정</th><th>2026 확정</th><th>건수 YoY</th><th>2025 매출(원)</th><th>2026 매출(원)</th><th>매출 YoY</th><th>26 목표 달성</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>1월</strong></td><td>137</td><td>187</td><td><span class="yoy-up">+36.5%</span></td><td>5,292,729</td><td>13,868,545</td><td><span class="yoy-up">+162.0%</span></td><td>106%</td></tr>
+              <tr><td><strong>2월</strong></td><td>230</td><td>345</td><td><span class="yoy-up">+50.0%</span></td><td>9,782,606</td><td>30,663,145</td><td><span class="yoy-up">+213.4%</span></td><td>139%</td></tr>
+              <tr><td><strong>3월</strong></td><td>486</td><td>686</td><td><span class="yoy-up">+41.2%</span></td><td>25,551,258</td><td>64,005,709</td><td><span class="yoy-up">+150.5%</span></td><td>137%</td></tr>
+              <tr><td><strong>4월</strong></td><td>791</td><td>1,140</td><td><span class="yoy-up">+44.1%</span></td><td>63,722,938</td><td>114,756,865</td><td><span class="yoy-up">+80.1%</span></td><td>151%</td></tr>
+              <tr><td><strong>5월</strong></td><td>898</td><td>1,143</td><td><span class="yoy-up">+27.3%</span></td><td>75,968,413</td><td>112,820,836</td><td><span class="yoy-up">+48.5%</span></td><td>131%</td></tr>
+              <tr><td><strong>6월</strong></td><td>737</td><td>1,044</td><td><span class="yoy-up">+41.7%</span></td><td>59,154,370</td><td>102,179,182</td><td><span class="yoy-up">+72.7%</span></td><td>144%</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td><strong>H1 합계</strong></td><td>3,279</td><td>4,545</td><td><span class="yoy-up">+38.6%</span></td><td>239,472,314</td><td>438,294,282</td><td><span class="yoy-up">+83.0%</span></td><td>139%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-top:8px; font-style:italic;">※ 매출은 골프플랫폼투어팀 공식 실적 시트의 <strong>수익매출(commission)</strong> 기준. 건수는 확정(투어완료+예약완료) 기준.</p>
+
+        <div class="insight-card">
+          <h3>월별 추세 핵심 관찰</h3>
+          <ul>
+            <li><strong>전 월 두 자릿수 이상 폭증 성장</strong>: 1월 +162%, 2월 +213%, 3월 +150% — 25년 H1에 막 런칭한 자이언트골프 채널이 26년 안정화·확장 단계 진입</li>
+            <li><strong>4월이 H1 매출 최대 (1.15억)</strong>: 봄 성수기 정점, 전년 동기 대비 +80%, 목표 대비 151% 초과 달성</li>
+            <li><strong>체결률 19.9% → 29.4% (+9.5%p)</strong>: MAU는 4월 -43%, 3월 -50% 하락했음에도 매출이 폭증 — 상담·전환 운영 효율이 비약적으로 개선</li>
+            <li><strong>5월·7월은 상대적 약세</strong>: 5월 매출 +48.5%로 H1 중 가장 낮은 성장률, 7월(공식 시트 기준 +83% 추이에서 -17%로 반전) 휴가철 비수기 대응 필요</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Product Portfolio -->
+    <section data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Part 2 · Product Portfolio</span>
+          <h2>상품 운영 현황 & 포트폴리오 분석</h2>
+          <p>1박2일 골프 투어 상품 종류 변화와 TOP 10 효자 상품의 공통 특징을 분석합니다.</p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card primary">
+            <div class="kpi-label">2025 운영 상품 수</div>
+            <div class="kpi-value">80종</div>
+            <div class="kpi-sub">국내투어 채널 운영 상품 (공식 시트)</div>
+          </div>
+          <div class="kpi-card secondary">
+            <div class="kpi-label">2026 운영 상품 수</div>
+            <div class="kpi-value accent">136종</div>
+            <div class="kpi-sub">파트너스 노출=Y · 이용=활성 기준 (2026-06-25)</div>
+            <div class="kpi-delta up">▲ +56종 vs 2025(80종) · +70.0%</div>
+          </div>
+          <div class="kpi-card positive">
+            <div class="kpi-label">평균 상품가격 (1인당)</div>
+            <div class="kpi-value">332,046원</div>
+            <div class="kpi-sub">2025: 340,923원 → 2026: 332,046원</div>
+            <div class="kpi-delta down">▼ -2.6% (-8,877원)</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">TOP 10 매출 비중 (확정 기준)</div>
+            <div class="kpi-value">28.4%</div>
+            <div class="kpi-sub">건수 비중 33.9% · 롱테일 + 헤드 균형</div>
+            <div class="kpi-delta">상위 10종 / 운영 103종</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:48px;margin-bottom:16px;">TOP 10 상품 — 확정 건수 기준 (2026 H1)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>상품명</th><th>지역</th><th>예약</th><th>확정</th><th>체결률</th><th>인원</th><th>인당단가</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>[동강시스타CC] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>569건</td><td><strong>217건</strong></td><td><span class="yoy-up">38.1%</span></td><td>1,016명</td><td>237,302</td></tr>
+              <tr><td>2</td><td>[알펜시아700CC] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>625건</td><td><strong>199건</strong></td><td>31.8%</td><td>888명</td><td>247,072</td></tr>
+              <tr><td>3</td><td>[로얄링스CC] 1박2일 패키지</td><td><span class="badge badge-region-충청">충청</span></td><td>429건</td><td><strong>188건</strong></td><td><span class="yoy-up">43.8%</span></td><td>832명</td><td>267,957</td></tr>
+              <tr><td>4</td><td>[울진마린CC] 1박2일 패키지</td><td><span class="badge badge-region-경상">경상</span></td><td>545건</td><td><strong>170건</strong></td><td>31.2%</td><td>796명</td><td>230,517</td></tr>
+              <tr><td>5</td><td>[알펜시아CC/명문코스] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>374건</td><td><strong>165건</strong></td><td><span class="yoy-up">44.1%</span></td><td>752명</td><td>304,963</td></tr>
+              <tr><td>6</td><td>[오투CC] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>307건</td><td><strong>141건</strong></td><td><span class="yoy-up">45.9%</span></td><td>660명</td><td>276,182</td></tr>
+              <tr><td>7</td><td>[솔라고CC] 1박2일 패키지</td><td><span class="badge badge-region-충청">충청</span></td><td>395건</td><td><strong>129건</strong></td><td>32.7%</td><td>576명</td><td>325,319</td></tr>
+              <tr><td>8</td><td>[센추리21CC] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>315건</td><td><strong>115건</strong></td><td>36.5%</td><td>504명</td><td>307,778</td></tr>
+              <tr><td>9</td><td>[클럽디거창CC] 1박2일 패키지</td><td><span class="badge badge-region-경상">경상</span></td><td>277건</td><td><strong>108건</strong></td><td>39.0%</td><td>516명</td><td>234,651</td></tr>
+              <tr><td>10</td><td>[월송리CC] 1박2일 패키지</td><td><span class="badge badge-region-강원">강원</span></td><td>277건</td><td><strong>107건</strong></td><td>38.6%</td><td>492명</td><td>345,163</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-top:8px; font-style:italic;">※ <strong>확정</strong> = 국내투어 상태값이 「투어완료 + 예약완료(결제완료) + 예약확인중」 인 건만 카운트 (취소완료·위약 제외). DB(golf_tour) 매핑 시 status 11 = 공식 시트 확정과 동일 — H1 DB 4,543건 ≈ 공식 시트 4,545건 (월별 1월 186/187, 4월 1,140/1,140, 5월 1,143/1,143, 6월 1,044/1,044). <strong>체결률</strong> = 확정 / 전체 예약 신청(상담·결제대기 포함).</p>
+
+        <div class="insight-card">
+          <h3>효자 상품의 공통 특징</h3>
+          <ul>
+            <li><strong>지역: 강원 6/10 압도적 우위</strong> → 동강시스타·알펜시아700·알펜시아·오투·센추리21·월송리 — 평창·정선·횡성 휴양형 클러스터가 H1 시장을 견인</li>
+            <li><strong>체결률 31~46% 정상화</strong>: TOP 10 평균 체결률 약 37% (상담 → 확정 전환), 알펜시아(44%)·오투(46%)·로얄링스(44%)가 전환 효율 최상위</li>
+            <li><strong>중가~프리미엄 가격대 분포</strong>: 인당 23~35만원 표준가 9종 + 골든베이(45.3만, 충청 프리미엄) 1종으로 매출 TOP 10 구성</li>
+            <li><strong>표준 패키지 포맷 우위</strong>: 모두 1박2일 36홀(2라운드) + 골프텔/리조트 숙박 + 조식 구성 — 시장이 표준화된 패키지를 선호</li>
+            <li><strong>2026 운영 상품 +56종 확대 (80→136종, +70.0%)</strong>: 카카오골프 파트너스 노출=Y·이용가능=활성 기준 현재 운영 상품 수. 평균 상품가격은 약간 하락(34.1만→33.2만)했으나 — 가성비·신규 골프장 다변화가 매출 +83% 성장의 기반</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Region & Demographic -->
+    <section data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Part 3 · Region & Demographic</span>
+          <h2>지역별 & 타겟 고객 분석</h2>
+          <p>권역별 예약 건수 추이와 연령·성별 데모그래픽, 재예약(리피터) 행동을 분석합니다.</p>
+        </div>
+
+        <h3 style="margin-bottom:8px;">권역별 확정 건수 (2026 H1)</h3>
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">확정 = status 11 (투어완료 + 예약완료(결제완료) + 예약확인중) — 취소·위약 제외. 신청 단계(상담)는 제외하고 실제 진행 완료된 확정 건수만 집계.</p>
+
+        <div class="region-grid">
+          <div class="region-card" style="--region-color:var(--accent);">
+            <div class="region-name">🏔️ 강원</div>
+            <div class="region-value">1,553건</div>
+            <div class="region-share">비중 34.1% · 6,980명 · YoY +43.8%</div>
+          </div>
+          <div class="region-card" style="--region-color:var(--warning);">
+            <div class="region-name">🌳 충청</div>
+            <div class="region-value">1,017건</div>
+            <div class="region-share">비중 22.4% · 4,632명 · YoY +154.3% 🔥🔥</div>
+          </div>
+          <div class="region-card" style="--region-color:var(--positive);">
+            <div class="region-name">⛰️ 경상</div>
+            <div class="region-value">879건</div>
+            <div class="region-share">비중 19.3% · 4,200명 · YoY +74.8% 🔥</div>
+          </div>
+          <div class="region-card" style="--region-color:var(--accent-secondary);">
+            <div class="region-name">🌾 전라</div>
+            <div class="region-value">872건</div>
+            <div class="region-share">비중 19.2% · 4,048명 · YoY +78.0% 🔥</div>
+          </div>
+          <div class="region-card" style="--region-color:#3b82f6;">
+            <div class="region-name">🌊 제주</div>
+            <div class="region-value">119건</div>
+            <div class="region-share">비중 2.6% · 496명 · YoY +116.4% 🔥</div>
+          </div>
+          <div class="region-card" style="--region-color:var(--negative);">
+            <div class="region-name">🏙️ 서울/경기</div>
+            <div class="region-value">109건</div>
+            <div class="region-share">비중 2.4% · 492명 · YoY +7.9% ⚠️</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:48px;">
+          <div class="chart-container">
+            <div class="chart-title">권역별 확정 건수 비중</div>
+            <div class="chart-subtitle">2026 H1 · status 11 기준 (단위: %)</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="2026년 상반기 지역별 확정 건수 비중 도넛 차트">
+              <canvas id="regionPieChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-title">권역별 확정 건수 YoY (2025 → 2026)</div>
+            <div class="chart-subtitle">전년 동기 대비 증감률</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="지역별 건수 YoY 증감률 막대 차트">
+              <canvas id="regionYoyChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>권역</th><th>2025 H1 확정</th><th>2026 H1 확정</th><th>YoY</th><th>비중 (2026)</th><th>2026 인원</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-region-강원">강원</span></td><td>1,080</td><td><strong>1,553</strong></td><td><span class="yoy-up">+43.8%</span></td><td>34.1%</td><td>6,980명</td></tr>
+              <tr><td><span class="badge badge-region-충청">충청</span></td><td>400</td><td><strong>1,017</strong></td><td><span class="yoy-up">+154.3% 🔥🔥</span></td><td>22.4%</td><td>4,632명</td></tr>
+              <tr><td><span class="badge badge-region-경상">경상</span></td><td>503</td><td><strong>879</strong></td><td><span class="yoy-up">+74.8% 🔥</span></td><td>19.3%</td><td>4,200명</td></tr>
+              <tr><td><span class="badge badge-region-전라">전라</span></td><td>490</td><td><strong>872</strong></td><td><span class="yoy-up">+78.0% 🔥</span></td><td>19.2%</td><td>4,048명</td></tr>
+              <tr><td><span class="badge badge-region-제주">제주</span></td><td>55</td><td><strong>119</strong></td><td><span class="yoy-up">+116.4% 🔥</span></td><td>2.6%</td><td>496명</td></tr>
+              <tr><td><span class="badge badge-region-서울경기">서울/경기</span></td><td>101</td><td>109</td><td><span class="yoy-up">+7.9% ⚠️</span></td><td>2.4%</td><td>492명</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td>합계</td><td>2,629</td><td>4,549</td><td><span class="yoy-up">+73.0%</span></td><td>100%</td><td>20,848명</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insight-card">
+          <h3>지역별 핵심 인사이트 (확정 건수 기준)</h3>
+          <ul>
+            <li><strong>🔥🔥 충청권 +154.3% 폭증 — H1 최대 성장 권역</strong>: 솔라고·로얄링스·블랙스톤 벨포레·골든베이 등 충청 신규 골프장 풀 확대 (2026년 신규 +56종 중 충청 비중 높음) — 비중 15.2% → 22.4%로 도약, **2위 권역으로 부상**</li>
+            <li><strong>🔥 제주 +116.4% 회복</strong>: 절대 규모는 작지만(2.6%) 항공권 패키지 + 라온·골프존 오라 등 신규 상품 효과로 2배 이상 성장</li>
+            <li><strong>🔥 전라권 +78.0% 성장</strong>: 세이지우드 여수경도·파인비치+솔라시도 등 신규 상품 효과 — 비중 18.6% → 19.2%</li>
+            <li><strong>🔥 경상권 +74.8% 성장</strong>: 울진마린·클럽디거창·오션비치 등 동해안·남부 권역 패키지 확대 — 안정적 성장</li>
+            <li><strong>🏔️ 강원은 절대 1위(34.1%) 유지, 성장률 +43.8%</strong>: 알펜시아700·동강시스타·오투·월송리 등 휴양형 클러스터 견인 — 시장 1위 유지하면서도 견조한 성장</li>
+            <li><strong>⚠️ 서울/경기 +7.9% 정체</strong>: 수도권 골프장 신규 제휴 부진 + 휴양형 선호 강화로 거의 정체 — 신규 상품 발굴 필요</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top:64px;margin-bottom:24px;">고객 데모그래픽 분석</h3>
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-title">2026 H1 연령·성별 비중</div>
+            <div class="chart-subtitle">확정 예약 기준 (단위: 건)</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="2026년 상반기 연령대·성별 분포 차트">
+              <canvas id="demoPieChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-title">세그먼트별 YoY 성장률</div>
+            <div class="chart-subtitle">2025 → 2026 상반기</div>
+            <div class="chart-canvas-wrap" role="img" aria-label="연령·성별 세그먼트별 YoY 성장률">
+              <canvas id="demoYoyChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>세그먼트</th><th>2025 H1 건수</th><th>2026 H1 건수</th><th>YoY 증감률</th><th>비중 (2026)</th></tr></thead>
+            <tbody>
+              <tr><td><strong>남성 4050대</strong></td><td>6,438</td><td><strong>8,436</strong></td><td><span class="yoy-up">+31.0%</span></td><td><strong>54.7%</strong></td></tr>
+              <tr style="background:rgba(16,185,129,0.05);"><td><strong>여성 4050대</strong> 🔥</td><td>2,553</td><td><strong>3,809</strong></td><td><span class="yoy-up">+49.2% 🔥 최대 성장</span></td><td><strong>24.7%</strong></td></tr>
+              <tr><td>남성 60대 이상</td><td>1,503</td><td>1,680</td><td><span class="yoy-up">+11.8%</span></td><td>10.9%</td></tr>
+              <tr><td>남성 2030대</td><td>541</td><td>570</td><td><span class="yoy-up">+5.4%</span></td><td>3.7%</td></tr>
+              <tr><td>여성 60대 이상</td><td>463</td><td>480</td><td><span class="yoy-up">+3.7%</span></td><td>3.1%</td></tr>
+              <tr><td>여성 2030대</td><td>221</td><td>228</td><td><span class="yoy-up">+3.2%</span></td><td>1.5%</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td>합계 (식별)</td><td>11,762</td><td>15,203</td><td><span class="yoy-up">+29.3%</span></td><td>100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insight-card">
+          <h3>4050대 여성의 부상 — TOP 선호 1박2일 상품</h3>
+          <p style="margin-bottom:16px;font-size:14px;">YoY +49.2% 성장한 <strong>4050대 여성</strong>이 가장 많이 예약한 1박2일 패키지 TOP 5</p>
+          <ul>
+            <li><strong>1위: 동강시스타CC 1박2일</strong> (166건, 강원) — 평창 휴양형, 가성비 우수</li>
+            <li><strong>2위: 알펜시아700CC 1박2일</strong> (159건, 강원) — 평창 골프텔 럭셔리</li>
+            <li><strong>3위: 울진마린CC 1박2일</strong> (146건, 경상) — 동해안 오션뷰</li>
+            <li><strong>4위: 솔라고CC 1박2일</strong> (95건, 충청) — 충청 표준 패키지</li>
+            <li><strong>5위: 알펜시아 명문코스 1박2일</strong> (88건, 강원) — 평창 프리미엄</li>
+          </ul>
+          <p style="margin-top:16px;font-size:13px;color:var(--text-secondary);">→ 4050대 여성은 <strong>강원 휴양형 + 오션뷰 + 표준 가성비 패키지</strong>를 선호. 럭셔리(알펜시아700·명문)와 중가(동강·울진) 양극화 패턴.</p>
+        </div>
+
+        <div class="insight-card">
+          <h3>고객 분석 핵심 시사점</h3>
+          <ul>
+            <li><strong>4050대가 시장의 79.4%</strong>: 4050대 남성(54.7%) + 여성(24.7%) = 압도적 코어 세그먼트</li>
+            <li><strong>여성 4050대 +49.2% 폭증</strong>: 가족·친구 동반 골프 트렌드 확산 + SNS 마케팅 효과 추정 — 마케팅 우선 타겟</li>
+            <li><strong>2030대 비중 5.2%로 낮음</strong>: 가격 부담 + 일정 어려움 — MZ세대 전용 단기 상품 또는 평일 할인 검토 필요</li>
+            <li><strong>60대 이상 +10.5%</strong>: 시니어 시장 안정 성장, 액티브 시니어 타겟 확대 가능</li>
+            <li><strong>식별률 약 99.8%</strong>: 회원 정보 품질이 양호, 추가 세분화 분석 가능</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top:64px;margin-bottom:16px;">재구매(리텐션·리피터) 분석 — 2025~2026 H1 누적</h3>
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">국내투어 확정 예약(status=11) 회원(userID 식별) 기준 누적 재구매 횟수 분포 + 코호트 잔존율 분석. ※ golf_tour DB는 2025-01부터 데이터 보유 — 2020-2024 데이터는 별도 정산 Excel 소스 기반(참고: 별도 분석 #17 자료).</p>
+
+        <div class="kpi-grid">
+          <div class="kpi-card primary">
+            <div class="kpi-label">누적 확정 회원 수</div>
+            <div class="kpi-value accent">9,823명</div>
+            <div class="kpi-sub">2025-01 ~ 2026-06 (식별 회원)</div>
+          </div>
+          <div class="kpi-card secondary">
+            <div class="kpi-label">리피터 비중 (2회+)</div>
+            <div class="kpi-value">11.8%</div>
+            <div class="kpi-sub">1,161명 / 9,823명</div>
+            <div class="kpi-delta up">▲ 충성 고객 코어</div>
+          </div>
+          <div class="kpi-card positive">
+            <div class="kpi-label">리피터 GMV 기여도</div>
+            <div class="kpi-value">21.8%</div>
+            <div class="kpi-sub">36.9억 / 169.4억 (인당 약 3.46백만원)</div>
+            <div class="kpi-delta up">▲ 신규 대비 2.3배 인당 매출</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">2025→2026 H1 리텐션율</div>
+            <div class="kpi-value">8.1%</div>
+            <div class="kpi-sub">2025 신규 6,108명 중 493명 재예약</div>
+            <div class="kpi-delta">시즌 단위 1년 전환 ~15~18% 추정</div>
+          </div>
+        </div>
+
+        <h4 style="margin-top:36px; margin-bottom:12px; font-size:1.05rem;">세그먼트별 누적 재구매 분포 + GMV 기여도</h4>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>세그먼트</th><th>회원 수</th><th>회원 비중</th><th>예약 건수</th><th>예약 비중</th><th>GMV</th><th>GMV 비중</th><th>인당 평균 GMV</th></tr></thead>
+            <tbody>
+              <tr><td><strong>신규 (1회)</strong></td><td>8,662명</td><td>88.2%</td><td>8,662건</td><td>76.5%</td><td>129.1억</td><td>76.2%</td><td>1,490,242원</td></tr>
+              <tr style="background:rgba(16,185,129,0.05);"><td><strong>리피터 (2회)</strong></td><td>927명</td><td>9.4%</td><td>1,854건</td><td>16.4%</td><td>26.9억</td><td>15.9%</td><td>2,900,659원</td></tr>
+              <tr style="background:rgba(16,185,129,0.08);"><td><strong>리피터 (3회)</strong></td><td>166명</td><td>1.7%</td><td>498건</td><td>4.4%</td><td>7.2억</td><td>4.2%</td><td>4,308,825원</td></tr>
+              <tr style="background:rgba(16,185,129,0.12);"><td><strong>리피터 (4-5회)</strong> 🔥</td><td>62명</td><td>0.6%</td><td>262건</td><td>2.3%</td><td>3.2억</td><td>1.9%</td><td>5,241,516원</td></tr>
+              <tr style="background:rgba(16,185,129,0.18);"><td><strong>헤비 유저 (6회+)</strong> ⭐</td><td>6명</td><td>0.1%</td><td>42건</td><td>0.4%</td><td>0.6억</td><td>0.3%</td><td>9,388,000원</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td>합계</td><td>9,823명</td><td>100%</td><td>11,318건</td><td>100%</td><td>169.4억</td><td>100%</td><td>1,724,884원</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin-top:36px; margin-bottom:12px; font-size:1.05rem;">코호트 분석 — 2025 신규 회원의 2026 H1 잔존율</h4>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>코호트</th><th>신규 회원 수</th><th>다음 기간 재예약</th><th>리텐션율</th><th>비고</th></tr></thead>
+            <tbody>
+              <tr><td><strong>2025 신규 코호트</strong></td><td>6,108명</td><td>493명 (2026 H1 재예약)</td><td><span class="yoy-up">8.1%</span></td><td>H1 6개월 한정 — 연환산 시 약 15~18% 추정</td></tr>
+              <tr><td><strong>2026 H1 신규</strong></td><td>3,715명</td><td>잔여 분석 대기</td><td>-</td><td>2026 하반기 측정 예정</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td>2026 H1 활성 회원</td><td>4,208명</td><td>신규 3,715 + 리피터 493</td><td>리피터 11.7%</td><td>전체 H1 식별 회원</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="insight-card">
+          <h3>재구매·리텐션 핵심 시사점</h3>
+          <ul>
+            <li><strong>리피터(2회+) 1,161명이 GMV의 21.8%(36.9억) 차지</strong>: 회원 비중 11.8% → GMV 비중 21.8%, 즉 <strong>인당 약 2.3배 가중치</strong>로 매출 기여 — 리피터 확보가 LTV의 핵심 레버</li>
+            <li><strong>1회성 고객(One-time) 비중 88.2%</strong>: 9,823명 중 8,662명이 단 한 번만 예약 (인당 GMV 149만원) — 재예약 유도가 최대 미답 기회. 투어 직후 14일 내 리텐션 캠페인 + 차기 시즌 사전 할인 쿠폰 발송 검토</li>
+            <li><strong>2025→2026 H1 리텐션율 8.1%</strong>: 2025 신규 6,108명 중 493명만 H1 재방문. 골프 시즌(봄·가을) 패턴 고려 시 연환산 약 15~18% 추정 — 업계 표준(20~25%) 대비 낮음, +5~7%p 개선 시 GMV +8~12% 상승 효과</li>
+            <li><strong>3회+ 충성 코어 234명(2.4%)이 인당 524~939만원 GMV</strong>: 헤비 유저(6회+) 6명은 인당 939만원 — 신규 대비 6.3배 가치. 별도 <strong>VIP 등급화 + 신상품 베타 우선권 + 동반자 할인 + 골프장 우선 부킹</strong> 등 차별 혜택 설계 필요</li>
+            <li><strong>인당 GMV 곡선</strong>: 신규 149만 → 2회 290만 → 3회 431만 → 4-5회 524만 → 6회+ 939만으로 <strong>회차별 인당 매출이 비례 성장</strong> — 한 번 리피터가 되면 LTV가 지속 확장. 2회차 전환이 최대 관문</li>
+            <li><strong>2026 H1 신규 유입 3,715명 (H1만으로 2025 전체의 60.8%)</strong>: 신규 유입 속도 가속 중 — 신규 → 2회 전환 캠페인 인프라를 하반기 내 구축 권장</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top:64px;margin-bottom:8px;">거주지 → 골프장 이동 거리 분석</h3>
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:24px;">2026 H1 확정 예약 중 거주지 sigunguSeq 매칭 가능한 3,380건 대상. 사용자 거주지(시·군·구 중심점)와 골프장 좌표 간 Haversine 직선 거리(km) 계산. ※ 좌표 평문 보호를 위해 시군구 단위 중심점 사용 → 실제 거리 ±5~15km 오차 가능.</p>
+
+        <div class="kpi-grid">
+          <div class="kpi-card primary">
+            <div class="kpi-label">평균 이동 거리</div>
+            <div class="kpi-value accent">~142km</div>
+            <div class="kpi-sub">3,380건 매칭 (전체 H1 확정의 74%)</div>
+          </div>
+          <div class="kpi-card secondary">
+            <div class="kpi-label">최다 거리 구간</div>
+            <div class="kpi-value">100~199km</div>
+            <div class="kpi-sub">2,037건 (60.3%) · 평균 142km</div>
+            <div class="kpi-delta up">▲ 시장의 코어</div>
+          </div>
+          <div class="kpi-card positive">
+            <div class="kpi-label">수도권 거주자 비중</div>
+            <div class="kpi-value">56.2%</div>
+            <div class="kpi-sub">서울·경기·인천 거주 2,118명</div>
+            <div class="kpi-delta up">▲ 절대 다수</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">근거리 0-49km 비중</div>
+            <div class="kpi-value">3.8%</div>
+            <div class="kpi-sub">129건 · 도심 인근 골프장 사례</div>
+          </div>
+        </div>
+
+        <h4 style="margin-top:36px; margin-bottom:12px; font-size:1.05rem;">① 거리 버킷별 분포 (H1 2026)</h4>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>거리 구간</th><th>건수</th><th>비중</th><th>평균 거리</th><th>특징</th></tr></thead>
+            <tbody>
+              <tr><td><strong>0-49km</strong> (근거리)</td><td>129건</td><td>3.8%</td><td>33.3km</td><td>도심 근접 — 수도권 거주자가 서울/경기 골프장 이용</td></tr>
+              <tr><td><strong>50-99km</strong> (중거리)</td><td>770건</td><td>22.8%</td><td>79.2km</td><td>당일 왕복 가능 권역 — 경기 외곽·충청 북부</td></tr>
+              <tr style="background:rgba(16,185,129,0.08);"><td><strong>100-199km</strong> (장거리·코어) 🔥</td><td><strong>2,037건</strong></td><td><strong>60.3%</strong></td><td>141.6km</td><td>주력 구간 — 1박2일 패키지의 표준 거리 (수도권 → 강원·충청)</td></tr>
+              <tr><td><strong>200-299km</strong></td><td>307건</td><td>9.1%</td><td>239.0km</td><td>수도권 → 경상·전라 또는 지방간 광역 이동</td></tr>
+              <tr><td><strong>300km+</strong> (초장거리)</td><td>137건</td><td>4.1%</td><td>368.9km</td><td>주로 제주 (항공) 또는 수도권 → 해남·여수 등 남부 끝단</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin-top:36px; margin-bottom:12px; font-size:1.05rem;">② 골프장 권역별 평균 이용 거리</h4>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>골프장 권역</th><th>건수</th><th>평균 거리</th><th>최단</th><th>최장</th><th>인사이트</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-region-제주">제주</span></td><td>80건</td><td><strong>368.2km</strong></td><td>7.9km</td><td>564.3km</td><td>항공 이동 — 거주지에 따라 편차 큼</td></tr>
+              <tr><td><span class="badge badge-region-전라">전라</span></td><td>656건</td><td><strong>168.9km</strong></td><td>10.9km</td><td>351.3km</td><td>수도권·충청에서 광역 이동, 매출 +78% 폭증 권역</td></tr>
+              <tr><td><span class="badge badge-region-강원">강원</span></td><td>1,071건</td><td>142.8km</td><td>4.2km</td><td>467.3km</td><td>수도권의 1순위 행선지 (1,030건 = 96%)</td></tr>
+              <tr><td><span class="badge badge-region-경상">경상</span></td><td>702건</td><td>132.3km</td><td>10.2km</td><td>412.9km</td><td>경상 거주자 다수 (65.6%) — 지역 내 이동 강함</td></tr>
+              <tr><td><span class="badge badge-region-충청">충청</span></td><td>786건</td><td>109.1km</td><td>2.1km</td><td>359.5km</td><td><strong>가장 가까운 권역</strong> — 수도권 접근성 최고, +154% 폭증</td></tr>
+              <tr><td><span class="badge badge-region-서울경기">서울/경기</span></td><td>85건</td><td><strong>68.9km</strong></td><td>28.4km</td><td>245.4km</td><td>당일 패키지 — 수도권 내부 단거리</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin-top:36px; margin-bottom:12px; font-size:1.05rem;">③ 거주지 × 골프장 권역 매트릭스 (H1 2026, 어디 사람이 어디로 가나)</h4>
+        <div class="table-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>거주지 ↓ \ 골프장 →</th><th>강원</th><th>충청</th><th>경상</th><th>전라</th><th>서울/경기</th><th>제주</th><th>거주지 합계</th></tr></thead>
+            <tbody>
+              <tr><td><strong>서울/경기/인천</strong> (2,118)</td><td style="background:rgba(43,95,45,0.30);"><strong>1,030 (48.6%)</strong></td><td style="background:rgba(245,158,11,0.25);">601 (28.4%)</td><td>131 (6.2%)</td><td>236 (11.1%)</td><td>77 (3.6%)</td><td>43 (2.0%)</td><td><strong>2,118 (56.2%)</strong></td></tr>
+              <tr><td><strong>경상</strong> (837)</td><td>65 (7.8%)</td><td>50 (6.0%)</td><td style="background:rgba(16,185,129,0.30);"><strong>460 (55.0%)</strong></td><td style="background:rgba(184,133,29,0.20);">204 (24.4%)</td><td>1 (0.1%)</td><td>27 (3.2%)</td><td>837 (22.2%)</td></tr>
+              <tr><td><strong>충청</strong> (388)</td><td>74 (19.1%)</td><td style="background:rgba(245,158,11,0.20);">102 (26.3%)</td><td>65 (16.8%)</td><td style="background:rgba(184,133,29,0.25);"><strong>119 (30.7%)</strong></td><td>2 (0.5%)</td><td>7 (1.8%)</td><td>388 (10.3%)</td></tr>
+              <tr><td><strong>전라</strong> (178)</td><td>3 (1.7%)</td><td>19 (10.7%)</td><td>20 (11.2%)</td><td style="background:rgba(184,133,29,0.30);"><strong>103 (57.9%)</strong></td><td>0</td><td>13 (7.3%)</td><td>178 (4.7%)</td></tr>
+              <tr><td><strong>강원</strong> (149)</td><td style="background:rgba(43,95,45,0.30);"><strong>81 (54.4%)</strong></td><td>15 (10.1%)</td><td>34 (22.8%)</td><td>8 (5.4%)</td><td>4 (2.7%)</td><td>7 (4.7%)</td><td>149 (4.0%)</td></tr>
+              <tr><td><strong>제주</strong> (7)</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>4 (57.1%)</td><td>7 (0.2%)</td></tr>
+              <tr><td>기타·해외 (93)</td><td>2</td><td>16</td><td>13</td><td>56</td><td>1</td><td>5</td><td>93 (2.5%)</td></tr>
+              <tr style="background:var(--surface-hover);font-weight:700;"><td>골프장 합계</td><td>1,256</td><td>804</td><td>724</td><td>726</td><td>85</td><td>106</td><td>3,770</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-top:8px; font-style:italic;">※ 매트릭스 컬러: 진할수록 해당 거주지 → 골프장 흐름이 큰 비중. 수도권(56.2%) → 강원(48.6%) + 충청(28.4%) 흐름이 H1 시장의 압도적 메인 동선.</p>
+
+        <div class="insight-card">
+          <h3>거리 분석 핵심 시사점</h3>
+          <ul>
+            <li><strong>국내투어 시장의 표준 거리 = 100~199km</strong>: 전체의 60.3%가 이 구간 — 수도권에서 강원(약 140km) 또는 충청(약 100km) 1박2일 패키지가 시장 표준 거리 공식</li>
+            <li><strong>수도권 거주자가 시장의 56.2%</strong> (서울+경기+인천 2,118건): 이들의 가장 큰 동선은 <strong>강원(48.6%) + 충청(28.4%) = 77.0%</strong> — 마케팅·상품 전략의 절대 우선 타겟</li>
+            <li><strong>충청권 평균 거리 109km로 가장 짧음 + +154% 폭증</strong>: 수도권에서 가장 가까운 휴양 권역. <strong>"수도권 → 충청 90분 거리"</strong>가 충청권 폭증의 구조적 이유 — 신규 골프장 14종(솔라고·로얄링스·블랙스톤 벨포레·골든베이) 추가로 공급 부족이 해소되며 시장 진입</li>
+            <li><strong>전라권 평균 169km — 가장 멀지만 +78% 성장</strong>: 거리 부담에도 세이지우드 여수경도·파인비치 등 프리미엄 상품의 흡인력 검증. 1박2일 → 2박3일 상품으로 거리 부담 해소 전략 검토</li>
+            <li><strong>경상·전라 거주자의 권역 내 이용률 55~58%</strong>: 지방 거주자는 자기 권역 내 골프장 우선 선택. 충청 거주자만 예외적으로 전라행이 30.7%로 가장 큼 — 충청권 거주자의 남부 진출 패턴 주목</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section data-reveal>
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Executive Summary</span>
+          <h2>최종 요약 & 액션 포인트</h2>
+        </div>
+
+        <div class="insight-card" style="border-left-color:var(--accent);">
+          <h3>2026년 상반기 핵심 메시지 7</h3>
+          <ul>
+            <li><strong>① 매출 +83.0% 성장 (공식 시트)</strong>: 확정 건수 +38.6% × 평균 객단가 +32% 더블 엔진 작동</li>
+            <li><strong>② 확정 건수 권역별 폭증 — 충청 +154.3% / 제주 +116.4% / 전라 +78.0% / 경상 +74.8%</strong>: 운영 상품 +56종(80→136) 효과로 지역 다변화 성공, 강원 외 전 권역이 +70% 이상 폭증</li>
+            <li><strong>③ 4050대 여성 +49.2% 폭증</strong>: 새로운 핵심 성장 세그먼트, 마케팅 우선 타겟화 권장</li>
+            <li><strong>④ TOP 10 상품 점유 28.4%(매출)/33.9%(건수)</strong>: 동강시스타·알펜시아·로얄링스·알펜시아700 견인 — 헤드 + 롱테일 균형 구조</li>
+            <li><strong>⑤ 서울/경기 +7.9% 정체</strong>: 거의 정체 상태 — 수도권 골프장 제휴 확대 시급</li>
+            <li><strong>⑥ 리피터 비중 11.8% / GMV 21.8% / 리텐션율 8.1%</strong>: 누적 9,823명 중 1,161명이 재예약 — 신규(88.2%) 리텐션 강화 + 헤비 유저(6회+ 인당 939만원) VIP 등급화가 LTV 핵심 레버</li>
+            <li><strong>⑦ 평균 이동 거리 142km · 수도권(56.2%) → 강원·충청 77%</strong>: 시장 표준은 100~199km 1박2일 구간(60.3%). 충청권은 평균 109km로 가장 가까워 +154% 폭증의 구조적 이유 — "수도권 90분 거리" 포지셔닝</li>
+          </ul>
+        </div>
+
+        <div class="insight-card" style="border-left-color:var(--accent-secondary);">
+          <h3>하반기 액션 아이템</h3>
+          <ul>
+            <li><strong>전라·충청 골프장 추가 발굴</strong>: 성장 견인 지역에 신규 패키지 5종 이상 추가</li>
+            <li><strong>4050대 여성 타겟 마케팅 강화</strong>: 카카오톡 채널·인스타그램 광고 집중, 여성 친구 그룹 동반 할인</li>
+            <li><strong>리텐션 캠페인 신설</strong>: 1회성 고객 8,660명 대상 투어 직후 14일 내 차기 시즌 할인 쿠폰 발송 → 재방문율 +10%p 목표</li>
+            <li><strong>VIP 등급화</strong>: 3회+ 헤비 유저(233명) 대상 신상품 베타·동반자 할인·전용 골프장 액세스 등 차별 혜택 설계</li>
+            <li><strong>서울/경기 회복 전략</strong>: 수도권 당일 패키지·평일 할인 상품 출시</li>
+            <li><strong>2030대 진입 장벽 해소</strong>: 가격대 14~18만원 미니 패키지(당일 18홀+간단 식사) 출시</li>
+            <li><strong>제주 항공권 패키지 확대</strong>: +116.4% 건수 성장세에 합당한 상품 라인업 확보</li>
+            <li><strong>"수도권 90분 거리" 충청 포지셔닝 확립</strong>: 평균 109km — 가장 가까운 휴양 권역 임을 마케팅 후크로 활용. 4050대 여성·신규 고객 1순위 타겟</li>
+            <li><strong>권역 클러스터 번들 상품</strong>: 리피터는 같은 골프장 재방문보다 인근 골프장 횡적 확장 선호 — 강원/충청 권역별 3종 묶음 패스 또는 시즌권 검토</li>
+          </ul>
+        </div>
+
+        <p class="footnote">데이터 출처: golf_tour DB (TourReservationInfo + TourProduct + User join) + golf_booking DB (UserDeparture + LocationSigungu + GolfInfo) + 공식 골프플랫폼투어팀 주간보고 시트 + 카카오골프 파트너스(상품관리) · 작성: 2026.06.25 · 분석 기준: 출발일(startDate) 기준, <strong>확정 = status 11</strong> (= 투어완료 + 예약완료(결제완료) + 예약확인중 통합), 취소·위약 제외. 운영 상품 수는 파트너스 노출=Y AND 이용=활성 기준. 리피터·리텐션 분석은 2025-01~2026-06 누적 status 11 + userID 식별 기준. 거리 분석은 사용자 최신 등록 출발지 sigunguSeq → LocationSigungu 좌표 ↔ GolfInfo 좌표 Haversine 직선 거리 (시·군·구 중심점 기반, ±5~15km 오차 가능, 매칭률 74%).</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    var DATA = {
+      monthly: {
+        '2025-02': { confirmed: 69, revenue: 55622000 },
+        '2025-03': { confirmed: 1901, revenue: 2565135000 },
+        '2025-04': { confirmed: 3535, revenue: 5630745200 },
+        '2025-05': { confirmed: 3683, revenue: 6230655720 },
+        '2025-06': { confirmed: 2739, revenue: 4572956000 },
+        '2026-01': { confirmed: 650, revenue: 2437681176 },
+        '2026-02': { confirmed: 1166, revenue: 1336228200 },
+        '2026-03': { confirmed: 2322, revenue: 3226557000 },
+        '2026-04': { confirmed: 3705, revenue: 5923855000 },
+        '2026-05': { confirmed: 4178, revenue: 7404182000 },
+        '2026-06': { confirmed: 3217, revenue: 5493558000 }
+      },
+      regions: {
+        '강원':    { res25: 1080, res26: 1553 },
+        '충청':    { res25: 400,  res26: 1017 },
+        '경상':    { res25: 503,  res26: 879  },
+        '전라':    { res25: 490,  res26: 872  },
+        '제주':    { res25: 55,   res26: 119  },
+        '서울/경기': { res25: 101,  res26: 109  }
+      },
+      demo: {
+        '남성 4050대':   { d25: 6438, d26: 8436 },
+        '여성 4050대':   { d25: 2553, d26: 3809 },
+        '남성 60대+':    { d25: 1503, d26: 1680 },
+        '남성 2030대':   { d25: 541,  d26: 570 },
+        '여성 60대+':    { d25: 463,  d26: 480 },
+        '여성 2030대':   { d25: 221,  d26: 228 }
+      }
+    };
+
+    function toggleMenu() { var dd = document.getElementById('vizMenuDropdown'); if (dd) dd.classList.toggle('open'); }
+    document.addEventListener('click', function(e) { if (!e.target.closest('.viz-menu')) { var dd = document.getElementById('vizMenuDropdown'); if (dd) dd.classList.remove('open'); } });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var dd = document.getElementById('vizMenuDropdown'); if (dd) dd.classList.remove('open'); } });
+
+    var savedTheme = localStorage.getItem('viz-theme');
+    var currentTheme = savedTheme || 'light';
+    function applyTheme(t) {
+      document.documentElement.className = 'theme-' + t;
+      var icon = document.getElementById('themeIcon');
+      var label = document.getElementById('themeLabel');
+      if (icon) icon.textContent = t === 'dark' ? '🌙' : '☀️';
+      if (label) label.textContent = t === 'dark' ? 'Dark' : 'Light';
+      localStorage.setItem('viz-theme', t);
+      currentTheme = t;
+      if (typeof onThemeChange === 'function') onThemeChange();
+    }
+    function cycleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+    applyTheme(currentTheme);
+
+    document.querySelectorAll('[data-reveal]').forEach(function(el) { el.classList.add('reveal'); });
+    var revealObserver = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+    async function downloadImage() {
+      var menu = document.querySelector('.viz-menu');
+      menu.style.display = 'none';
+      try {
+        var url = await htmlToImage.toPng(document.body, { quality: 1, pixelRatio: 2, filter: function(n) { return !n.classList || !n.classList.contains('viz-menu'); } });
+        var a = document.createElement('a'); a.href = url; a.download = '국내투어_2026_상반기_리뷰.png'; a.click();
+      } catch(e) { console.error(e); }
+      menu.style.display = '';
+    }
+
+    var ChartManager = {
+      charts: new Map(),
+      safeInit: function(canvasId, config) {
+        if (typeof Chart === 'undefined') return null;
+        try {
+          if (this.charts.has(canvasId)) { this.charts.get(canvasId).destroy(); this.charts.delete(canvasId); }
+          var ctx = document.getElementById(canvasId); if (!ctx) return null;
+          ctx.setAttribute('role','img'); if (!ctx.getAttribute('aria-label')) ctx.setAttribute('aria-label','Chart');
+          var c = new Chart(ctx, config); this.charts.set(canvasId, c); return c;
+        } catch(e) { console.error(e); return null; }
+      }
+    };
+
+    var chartsBuilt = false;
+    function buildCharts() {
+      if (chartsBuilt || typeof Chart === 'undefined') return;
+      var styles = getComputedStyle(document.documentElement);
+      var textColor = styles.getPropertyValue('--text').trim();
+      var textSec = styles.getPropertyValue('--text-secondary').trim();
+      var isDark = document.documentElement.classList.contains('theme-dark');
+      var gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+      var accent = styles.getPropertyValue('--accent').trim();
+      var accentSec = styles.getPropertyValue('--accent-secondary').trim();
+      var positive = styles.getPropertyValue('--positive').trim();
+      var negative = styles.getPropertyValue('--negative').trim();
+      var warning = styles.getPropertyValue('--warning').trim();
+
+      var common = {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        plugins: {
+          legend: { labels: { color: textColor, font: { size: 12, family: 'Inter' } } },
+          tooltip: { enabled: true, padding: 12, cornerRadius: 8 }
+        },
+        scales: {
+          x: { ticks: { color: textSec, font: { size: 11 } }, grid: { color: gridColor } },
+          y: { ticks: { color: textSec, font: { size: 11 } }, grid: { color: gridColor }, beginAtZero: true }
+        }
+      };
+
+      // Monthly Confirmed (공식 실적 시트 기준)
+      var months = ['1월','2월','3월','4월','5월','6월'];
+      var conf25 = [137, 230, 486, 791, 898, 737];
+      var conf26 = [187, 345, 686, 1140, 1143, 1044];
+      ChartManager.safeInit('monthlyConfirmedChart', {
+        type: 'bar',
+        data: { labels: months, datasets: [
+          { label: '2025', data: conf25, backgroundColor: accentSec, borderRadius: 6 },
+          { label: '2026', data: conf26, backgroundColor: accent, borderRadius: 6 }
+        ]},
+        options: common
+      });
+
+      // Monthly Revenue (수익매출, 백만원 단위)
+      var rev25 = [5.29, 9.78, 25.55, 63.72, 75.97, 59.15];
+      var rev26 = [13.87, 30.66, 64.01, 114.76, 112.82, 102.18];
+      ChartManager.safeInit('monthlyRevenueChart', {
+        type: 'bar',
+        data: { labels: months, datasets: [
+          { label: '2025 수익매출(백만원)', data: rev25, backgroundColor: accentSec, borderRadius: 6 },
+          { label: '2026 수익매출(백만원)', data: rev26, backgroundColor: accent, borderRadius: 6 }
+        ]},
+        options: common
+      });
+
+      // Region Pie (확정 건수 기준 — 권역 카드 색상과 동일 매핑)
+      var regionNames = Object.keys(DATA.regions);
+      var regionRes = regionNames.map(function(n) { return DATA.regions[n].res26; });
+      // 순서: 강원, 충청, 경상, 전라, 제주, 서울/경기
+      var regionColors = [accent, warning, positive, accentSec, '#3b82f6', negative];
+      ChartManager.safeInit('regionPieChart', {
+        type: 'doughnut',
+        data: { labels: regionNames, datasets: [{ data: regionRes, backgroundColor: regionColors, borderWidth: 2, borderColor: styles.getPropertyValue('--surface').trim() }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: textColor, font: { size: 12, family: 'Inter' }, padding: 12 } },
+            tooltip: { enabled: true, callbacks: { label: function(c) { var total = c.dataset.data.reduce(function(a,b) { return a+b; },0); return c.label + ': ' + c.parsed.toLocaleString() + '건 (' + (c.parsed/total*100).toFixed(1) + '%)'; } } }
+          }
+        }
+      });
+
+      // Region YoY (건수 기준)
+      var yoy = regionNames.map(function(n) { var r = DATA.regions[n]; return ((r.res26/r.res25 - 1) * 100); });
+      var yoyColors = yoy.map(function(v) { return v >= 40 ? positive : v >= 0 ? accent : negative; });
+      ChartManager.safeInit('regionYoyChart', {
+        type: 'bar',
+        data: { labels: regionNames, datasets: [{ label: '건수 YoY %', data: yoy.map(function(v) { return v.toFixed(1); }), backgroundColor: yoyColors, borderRadius: 6 }] },
+        options: Object.assign({}, common, {
+          plugins: Object.assign({}, common.plugins, { legend: { display: false } }),
+          indexAxis: 'y',
+          scales: { x: { ticks: { color: textSec, callback: function(v) { return v + '%'; } }, grid: { color: gridColor } }, y: { ticks: { color: textSec }, grid: { color: gridColor } } }
+        })
+      });
+
+      // Demo Pie (2026)
+      var demoNames = Object.keys(DATA.demo);
+      var demoVals = demoNames.map(function(n) { return DATA.demo[n].d26; });
+      var demoColors = [accent, '#e879f9', accentSec, '#06b6d4', warning, '#f472b6'];
+      ChartManager.safeInit('demoPieChart', {
+        type: 'doughnut',
+        data: { labels: demoNames, datasets: [{ data: demoVals, backgroundColor: demoColors, borderWidth: 2, borderColor: styles.getPropertyValue('--surface').trim() }] },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: textColor, font: { size: 11, family: 'Inter' }, padding: 8 } },
+            tooltip: { enabled: true, callbacks: { label: function(c) { var total = c.dataset.data.reduce(function(a,b) { return a+b; },0); return c.label + ': ' + c.parsed.toLocaleString() + '건 (' + (c.parsed/total*100).toFixed(1) + '%)'; } } }
+          }
+        }
+      });
+
+      // Demo YoY
+      var demoYoy = demoNames.map(function(n) { var d = DATA.demo[n]; return ((d.d26/d.d25 - 1) * 100); });
+      var demoYoyColors = demoYoy.map(function(v) { return v >= 40 ? positive : v >= 20 ? accent : v >= 0 ? accentSec : negative; });
+      ChartManager.safeInit('demoYoyChart', {
+        type: 'bar',
+        data: { labels: demoNames, datasets: [{ label: 'YoY %', data: demoYoy.map(function(v) { return v.toFixed(1); }), backgroundColor: demoYoyColors, borderRadius: 6 }] },
+        options: Object.assign({}, common, {
+          plugins: Object.assign({}, common.plugins, { legend: { display: false } }),
+          indexAxis: 'y',
+          scales: { x: { ticks: { color: textSec, callback: function(v) { return v + '%'; } }, grid: { color: gridColor } }, y: { ticks: { color: textSec, font: { size: 10 } }, grid: { color: gridColor } } }
+        })
+      });
+
+      chartsBuilt = true;
+    }
+    function onThemeChange() { chartsBuilt = false; setTimeout(buildCharts, 100); }
+    document.addEventListener('DOMContentLoaded', buildCharts);
+    window.addEventListener('load', function() { if (!chartsBuilt) buildCharts(); });
+  </script>
+</body>
+</html>
